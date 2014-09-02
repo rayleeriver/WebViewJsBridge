@@ -9,7 +9,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.widget.Toast;
 
@@ -18,7 +18,7 @@ public class MyActivity extends Activity implements OnClickListener {
     private static final String URL = "file:///android_asset/index.html";
     private WebView mWebView;
 
-    @SuppressLint("SetJavaScriptEnabled")
+//    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class MyActivity extends Activity implements OnClickListener {
                 if (user.isEmpty()) {
                     user = "World";
                 }
-                String javascript = "javascript: document.getElementById('msg').innerHTML='Hello " + user + "!';injectedObject.toast();";
+                String javascript = "javascript: document.getElementById('msg').innerHTML='String from app: " + user + "!';injectedObject.doEchoTest('"+user+"');";
                 view.loadUrl(javascript);
             }
         });
@@ -47,7 +47,7 @@ public class MyActivity extends Activity implements OnClickListener {
                 Toast.makeText(MyActivity.this, "aa", Toast.LENGTH_SHORT);
             }
         }
-        mWebView.addJavascriptInterface(new JsObject(), "injectedObject");
+        mWebView.addJavascriptInterface(new JSInterface(mWebView), "injectedObject");
         mWebView.loadData("", "text/html", null);
         mWebView.loadUrl("javascript:alert(injectedObject.toast())");
 
